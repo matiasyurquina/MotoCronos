@@ -1,0 +1,61 @@
+
+<h1>Cronómetro</h1>
+    <p id="cronometro">0:00.00</p>
+    <button id="iniciar">Iniciar</button>
+    <button id="detener">Detener</button>
+    <button id="reiniciar">Reiniciar</button>
+
+    <script>
+        // Variables para el cronómetro
+        let minutos = 0;
+        let segundos = 0;
+        let centesimas = 0;
+        let cronometro;
+
+        // Elementos del DOM
+        const cronometroDisplay = document.getElementById('cronometro');
+        const botonIniciar = document.getElementById('iniciar');
+        const botonDetener = document.getElementById('detener');
+        const botonReiniciar = document.getElementById('reiniciar');
+
+        // Función para actualizar el cronómetro
+        function actualizarCronometro() {
+            centesimas++;
+            if (centesimas === 100) {
+                centesimas = 0;
+                segundos++;
+            }
+            if (segundos === 60) {
+                segundos = 0;
+                minutos++;
+            }
+            const centesimasMostrar = centesimas.toString().padStart(2, '0');
+            cronometroDisplay.textContent = minutos.toString().padStart(2, '0') + ':' +
+                segundos.toString().padStart(2, '0') + '.' + centesimasMostrar;
+        }
+
+        // Evento para iniciar el cronómetro
+        botonIniciar.addEventListener('click', function () {
+            cronometro = setInterval(actualizarCronometro, 10); // Actualizar cada 10 milisegundos (centésimas)
+            botonIniciar.disabled = true;
+            botonDetener.disabled = false;
+        });
+
+        // Evento para detener el cronómetro
+        botonDetener.addEventListener('click', function () {
+            clearInterval(cronometro);
+            botonIniciar.disabled = false;
+            botonDetener.disabled = true;
+        });
+
+        // Evento para reiniciar el cronómetro
+        botonReiniciar.addEventListener('click', function () {
+            clearInterval(cronometro);
+            minutos = 0;
+            segundos = 0;
+            centesimas = 0;
+            cronometroDisplay.textContent = '0:00.00';
+            botonIniciar.disabled = false;
+            botonDetener.disabled = true;
+        });
+    </script>
