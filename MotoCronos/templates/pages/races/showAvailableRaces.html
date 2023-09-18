@@ -1,0 +1,70 @@
+<title>Mostrar Carreras Disponibles</title>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-content position-relative max-height-vh-100 h-100">
+    
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <tr>
+          
+                      <th class="font-weight-bold text-dark">ID Carrera</th>
+                      <th class="font-weight-bold text-dark">Nombre Carrera</th>
+                      <th class="font-weight-bold text-dark">Vueltas</th>
+                      <th class="font-weight-bold text-dark">Fecha de creación</th>
+                      <th class="font-weight-bold text-dark">Estado</th>
+                      <th class="font-weight-bold text-dark">-</th>
+                  </tr>
+                </thead>
+                {% for r in races %}
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{r.idRace}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-sm font-weight-bold text-dark mb-0">{{r.name}}</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <p class="text-xs text-dark mb-0 font-weight-bold">{{r.lapNumber}}</p>
+                    </td>
+                    <td class="align-middle text-center">
+          
+                      <span class="text-dark font-weight-bold">{{r.date|date:"d/m/Y"}}</span>
+                      <!-- class="text-secondary text-xs font-weight-bold" -->
+                    </td>
+                    <td class="align-middle">
+                      {% if r.active == True %}
+                      <span class="badge badge-sm bg-gradient-success">Activa</span>
+                      {% else %}
+                      <span class="badge badge-sm bg-gradient-danger">Inactiva</span>
+                      {% endif %}
+                      <!-- <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        Ver
+                      </a> -->
+                    </td>
+                    <td><a href="#">Ver</a></td>
+                  </tr>
+                  
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+          </div>         
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

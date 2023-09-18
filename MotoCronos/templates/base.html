@@ -1,17 +1,359 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css" />
-    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/moto.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'assets/img/moto.png' %}">
+  <title>
+    MotoCronos
+  </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <title>MotoCronos - Home</title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{% static 'assets/css/argon-dashboard.css' %}" rel="stylesheet" />
 </head>
-<body>{% include "menu.html" %}
 
-    {% block content %}
-    {% endblock %}
+<body class="g-sidenav-show   bg-gray-100">
+  <div class="min-height-300 bg-primary position-absolute w-100 opacity-3"><img src="{% static 'assets/img/motos/moto.jpg' %}" alt="" width="100%"></div>
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" href="{% url 'home' %}" target="">
+        <img src="{% static 'assets/img/motocross-silhouette.jpg' %}" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold">Panel de Control</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link {% if path_race %}active disabled{% endif %}" href="#" data-toggle="collapse" data-target="#race">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-spaceship text-primary text-sm opacity-10"></i>
+            </div>
+            <span>Carrera</span>
+          </a>
+        </li>
+        <!-- class="nav-link-text ms-1" -->
+                <li class="nav-item collapse {% if path_race %}show{% endif %}" id="race">
+                  <a class="nav-link {%if request.path == '/race/newRace/'%}disabled{%endif%}" href="{% url 'newRace' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/race/newRace/' %}
+                      <span class="nav-link-text ms-1 active"><strong>Nueva Carrera</strong></span>
+                    {% else %}
+                      <span class="nav-link-text ms-1">Nueva Carrera</span>
+                    {% endif %}
+                  </a>
+                </li>
+                <li class="nav-item collapse {% if path_race %}show{% endif %}" id="race">
+                  <a class="nav-link {%if request.path == '/race/showAvailableRaces/'%}disabled{%endif%}" href="{% url 'showAvailableRaces' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/race/showAvailableRaces/' %}
+                      <span class="nav-link-text ms-1 active"><strong>Ver carreras disponibles</strong></span>
+                    {% else %}
+                      <span class="nav-link-text ms-1">Ver carreras disponibles</span>
+                    {% endif %}
+                  </a>
+                </li>
+                <li class="nav-item collapse {% if path_race %}show{% endif %}" id="race">
+                  <a class="nav-link {%if request.path == '/race/showPastRaces/'%}disabled{%endif%}" href="{% url 'showPastRaces' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/race/showPastRaces/' %}
+                      <span class="nav-link-text ms-1 active"><strong>Ver carreras pasadas</strong></span>
+                    {% else %}
+                      <span class="nav-link-text ms-1">Ver carreras pasadas</span>
+                    {% endif %}
+                  </a>
+                </li>
+                <li class="nav-item collapse {% if path_race %}show{% endif %}" id="race">
+                  <a class="nav-link {%if request.path == '/race/editRace/'%}disabled{%endif%}" href="{% url 'editRace' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/race/editRace/' %}
+                      <span class="nav-link-text ms-1 active"><strong>Modificar carrera activa</strong></span>
+                    {% else %}
+                      <span class="nav-link-text ms-1">Modificar carrera activa</span>
+                    {% endif %}
+                  </a>
+                </li>
+                
+        <li class="nav-item">
+          <a class="nav-link {% if path_racer %}active disabled{% endif %}" href="#" data-toggle="collapse" data-target="#racer">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Corredor</span>
+          </a>
+        </li>
+                <li class="nav-item collapse {% if path_racer %}show{% endif %}" id="racer">
+                  <a class="nav-link {%if path_racer == '/racer/newRacer/'%}disabled{%endif%}" href="{% url 'newRacer' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/racer/newRacer/' %}
+                    <span class="nav-link-text ms-1"> <strong>Nuevo Corredor</strong></span>
+                    {% else %}
+                    <span class="nav-link-text ms-1">Nuevo Corredor</span>
+                    {% endif %}
+                  </a>
+                </li>
+                <li class="nav-item collapse {% if path_racer %}show{% endif %}" id="racer">
+                  <a class="nav-link {%if path_racer == '/racer/ALRacers/'%}disabled{%endif%}" href="{% url 'ALRacers' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/racer/ALRacers/' %}
+                    <span class="nav-link-text ms-1"> <strong>Lista Alfabética</strong></span>
+                    {% else %}
+                    <span class="nav-link-text ms-1">Lista Alfabética</span>
+                    {% endif %}
+                  </a>
+                </li>
+                <li class="nav-item collapse {% if path_racer %}show{% endif %}  " id="racer">
+                  <a class="nav-link {%if path_racer == '/racer/IDRacers/'%}disabled{%endif%}" href="{% url 'IDRacers' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/racer/IDRacers/' %}
+                    <span class="nav-link-text ms-1"> <strong>Buscar por DNI</strong></span>
+                    {% else %}
+                    <span class="nav-link-text ms-1">Buscar por DNI</span>
+                    {% endif %}
+                    
+                  </a>
+                </li>
+                <li class="nav-item collapse {% if path_racer %}show{% endif %}  " id="racer">
+                  <a class="nav-link {%if path_racer == '/racer/NLRacers/'%}disabled{%endif%}" href="{% url 'NLRacers' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    {% if request.path == '/racer/NLRacers/' %}
+                    <span class="nav-link-text ms-1"> <strong>Buscar por Nombre</strong></span>
+                    {% else %}
+                    <span class="nav-link-text ms-1">Buscar por Nombre</span>
+                    {% endif %}
+                    
+                  </a>
+                </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/startRace/' %}active disabled{% endif %}" href="{% url 'startRace' %}" href="#" data-toggle="collapse" data-target="#start">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-button-play text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Comenzar Carrera</span>
+          </a>
+        </li>
+                <li class="nav-item collapse {% if path_startRace %}show{% endif %}" id="start">
+                  <a class="nav-link" href="{% url 'startRace' %}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    <span class="nav-link-text ms-1">Nuevo Corredor</span>
+                  </a>
+                </li>
+
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% static 'pages/profile.html' %}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'login' %}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% static 'pages/sign-up.html' %}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-collection text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li>
+      </ul>
+    </div>    
+  </aside>
+
+
+  
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+
+          <h6 class="font-weight-bolder text-white mb-0"> {{seccion}} </h6>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group">
+              
+            </div>
+          </div>
+          <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none text-dark"><strong>Logout</strong></span>
+              </a>
+            </li>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line bg-black"></i>
+                  <i class="sidenav-toggler-line bg-black"></i>
+                  <i class="sidenav-toggler-line bg-black"></i>
+                </div>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+  {% block content %}
+  {% endblock %}
+  </main>
+ 
+  <!--   Core JS Files   -->
+  <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/smooth-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/chartjs.min.js' %}"></script>
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'assets/js/argon-dashboard.min.js' %}"></script>
 </body>
+
+<script>
+//    document.onkeydown = function(e){
+//       tecla = (document.all) ? e.keyCode : e.which;
+//       if (tecla == 116){
+//         if (confirm("Seguro que quieres refrescar la página ") == true) {
+//             return true;
+//           } else {
+//             return false;
+//         }
+//       }
+// }
+  // function NoBack(){
+  //   history.go(1)
+  // }
+  
+  </script>
 </html>
