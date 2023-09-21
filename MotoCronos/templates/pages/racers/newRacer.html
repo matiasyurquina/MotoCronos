@@ -3,39 +3,45 @@
 {% load static %}
 
 {% block content %}
-
-</head>
-<body>
-    <!-- <div class="container-fluid py-4">
+    <div class="container-fluid py-4">
       <div class="row">
         <div class="col-md-8">
           <div class="card">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-              
+                <div class="d-flex align-items-center">
+                  <p class="mb-0"><strong>Ingrese datos del Corredor</strong></p>
+                  
+                </div>
                 
               </div>
-            </div> -->
+            </div>
             
-            <!-- <form class="card-body">
+            <form class="card-body" method="post" id="form"> {% csrf_token %}
               
               <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Nombre</label>
-                      <input class="form-control" type="text" value="" maxlength="64" id="name" name="name" pattern="[a-zA-Z]+" required>
+                      <input class="form-control" type="text" value="" maxlength="64" id="name" name="name" pattern="[a-zA-Z ]+" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Apellido</label>
-                      <input class="form-control" type="text" value="" maxlength="64" id="lname" name="lname" pattern="[a-zA-Z]+" required>
+                      <input class="form-control" type="text" value="" maxlength="64" id="lname" name="lname" pattern="[a-zA-Z ]+" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-number-input" class="form-control-label">DNI</label>
-                    <input class="form-control" type="number" value="" id="dni" name="dni" required>
+                    <input class="form-control" type="text" value="" id="dni" name="dni" minlength="5" maxlength="15" pattern="[0-9]+" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="example-number-input" class="form-control-label">Fecha de Nacimiento</label>
+                    <input class="form-control" type="date" value="" id="birth" name="birth" required>
                   </div>
                 </div>
               </div>
@@ -43,21 +49,43 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label">Celular</label>
-                    <input class="form-control" type="text" value="" maxlength="10" minlength="10" pattern="[0-9]+" required>
+                    <input class="form-control" type="text" value="" maxlength="10" minlength="10" pattern="[0-9]+" id="cel" name="cel" required>
                   </div>
                 </div> <br>
                 <hr class="horizontal dark">
                 <div class="col-md-4">
                 <div class="form-group">
-                  <input type="submit" class="btn btn-primary" value="Guardar">
+                  <input type="submit" class="btn btn-primary" value="Guardar" id="btnSave">
                 </div>
               </div>
               </div>
               
-            </form> -->
-          <!-- </div>
+            </form>
+          </div>
         </div>
-    </div> -->
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+    const btnSave = document.getElementById('btnSave');
+    const form = document.getElementById('form');
 
-  
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Nuevo corredor',
+            text: '¿Estás seguro de guardar los datos?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, envía el formulario para guardar el producto
+                form.submit();
+            }
+        });
+    });
+    });    
+</script>
+
   {% endblock %}

@@ -5,10 +5,10 @@ class Racer(models.Model):
     idRacer=models.PositiveIntegerField(primary_key=True)
     name=models.CharField(max_length=32, null=False)
     lname=models.CharField(max_length=32, null=False)
-    dni=models.PositiveIntegerField(unique=True, null=False)
+    dni=models.CharField(unique=True, null=False, max_length=15)
     birth=models.DateField(null=False)
-    cel=models.PositiveIntegerField(blank=True, null=True)
-    active=models.BooleanField()
+    cel=models.CharField(max_length=10, null=False)
+    active=models.BooleanField(default=True)
     
 
 class Race(models.Model):

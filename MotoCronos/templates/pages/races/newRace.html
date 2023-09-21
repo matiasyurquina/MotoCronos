@@ -16,7 +16,7 @@
                 
               </div>
             </div>
-            <form class="card-body" method="post"> {% csrf_token %}         
+            <form class="card-body" method="post" id="form"> {% csrf_token %}         
               <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -24,8 +24,8 @@
                       <input class="form-control" type="text" value="" min="5" maxlength="32" id="name" name="name" pattern="[A-Za-z0-9 ]*" required>
                     </div>
                 </div>
-                
               </div>
+
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="example-number-input" class="form-control-label">Seleccione cantidad de vueltas</label><br>
@@ -53,5 +53,29 @@
         </div>
     </div>
   </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+    const btnSave = document.getElementById('btnSave');
+    const form = document.getElementById('form');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Nueva Carrera',
+            text: '¿Estás seguro de guardar los datos?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, envía el formulario para guardar el producto
+                form.submit();
+            }
+        });
+    });
+    });    
+</script>
   
   {% endblock %}

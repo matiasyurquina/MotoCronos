@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/moto.png' %}">
   <link rel="icon" type="image/png" href="{% static 'assets/img/moto.png' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/css/sweetAlert.css' %}">
+  <script src="{% static 'assets/css/sweetAlert' %} "></script>
+  
   <title>
     MotoCronos
   </title>
@@ -101,7 +105,7 @@
           </a>
         </li>
                 <li class="nav-item collapse {% if path_racer %}show{% endif %}" id="racer">
-                  <a class="nav-link {%if path_racer == '/racer/newRacer/'%}disabled{%endif%}" href="{% url 'newRacer' %}">
+                  <a class="nav-link {%if request.path == '/racer/newRacer/'%}disabled{%endif%}" href="{% url 'newRacer' %}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     </div>
                     {% if request.path == '/racer/newRacer/' %}
@@ -112,7 +116,7 @@
                   </a>
                 </li>
                 <li class="nav-item collapse {% if path_racer %}show{% endif %}" id="racer">
-                  <a class="nav-link {%if path_racer == '/racer/ALRacers/'%}disabled{%endif%}" href="{% url 'ALRacers' %}">
+                  <a class="nav-link {%if request.path == '/racer/ALRacers/'%}disabled{%endif%}" href="{% url 'ALRacers' %}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     </div>
                     {% if request.path == '/racer/ALRacers/' %}
@@ -123,7 +127,7 @@
                   </a>
                 </li>
                 <li class="nav-item collapse {% if path_racer %}show{% endif %}  " id="racer">
-                  <a class="nav-link {%if path_racer == '/racer/IDRacers/'%}disabled{%endif%}" href="{% url 'IDRacers' %}">
+                  <a class="nav-link {%if request.path == '/racer/IDRacers/'%}disabled{%endif%}" href="{% url 'IDRacers' %}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     </div>
                     {% if request.path == '/racer/IDRacers/' %}
@@ -135,7 +139,7 @@
                   </a>
                 </li>
                 <li class="nav-item collapse {% if path_racer %}show{% endif %}  " id="racer">
-                  <a class="nav-link {%if path_racer == '/racer/NLRacers/'%}disabled{%endif%}" href="{% url 'NLRacers' %}">
+                  <a class="nav-link {%if request.path == '/racer/NLRacers/'%}disabled{%endif%}" href="{% url 'NLRacers' %}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     </div>
                     {% if request.path == '/racer/NLRacers/' %}
@@ -159,7 +163,7 @@
                   <a class="nav-link" href="{% url 'startRace' %}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     </div>
-                    <span class="nav-link-text ms-1">Nuevo Corredor</span>
+                    <span class="nav-link-text ms-1">Comenzar</span>
                   </a>
                 </li>
 
@@ -354,6 +358,35 @@
   // function NoBack(){
   //   history.go(1)
   // }
-  
+        //Hiding success message
+        $(document).ready(function() {
+            $("#msg").delay(8000).fadeOut();
+            $("#error").delay(8000).fadeOut();
+         });
+
+         
   </script>
+
+<script>
+  function confirm(){
+
+    Swal.fire({
+    title: '¿Estás seguro que deseas guardar los cambios?',
+    text: 'Guardar los cambios',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí',
+    cancelButtonText: 'Cancelar'
+    }).then((result) => {
+    if (result.isConfirmed) {
+      // Aquí puedes realizar la acción si el usuario confirma
+    }
+    });
+  }
+  
+
+// Swal.fire('¡Éxito!', 'La operación se realizó correctamente', 'success');
+// Swal.fire('Error', 'Hubo un problema al procesar la solicitud', 'error');
+
+</script>
 </html>

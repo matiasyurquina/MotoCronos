@@ -1,0 +1,34 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'assets/css/sweetAlert.css' %}">
+<script src="{% static 'assets/css/sweetAlert' %} "></script>
+
+<form id="form" method="post">
+    {% csrf_token %}
+        <input type="text" id="asdasd">
+      <input type="submit" name="btn" id="btnSave">
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+    const btnSave = document.getElementById('btnSave');
+    const form = document.getElementById('form');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Quieres guardar este producto?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, envía el formulario para guardar el producto
+                form.submit();
+            }
+        });
+    });
+    });    
+</script>

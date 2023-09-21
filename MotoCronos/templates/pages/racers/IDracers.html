@@ -3,4 +3,105 @@
 {% load static %}
 
 {% block content %}
+
+    <!-- If the racer exists-->
+{% if racer %}
+        <div class="main-content position-relative max-height-vh-100 h-100">
+            <div class="container-fluid py-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center table-responsive p-0">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>            
+                                                <th class="font-weight-bold text-dark">ID Corredor</th>
+                                                <th class="font-weight-bold text-dark">Nombre</th>
+                                                <th class="font-weight-bold text-dark">DNI</th>
+                                                <th class="font-weight-bold text-dark">Nacimiento</th>
+                                                <th class="font-weight-bold text-dark">Celular</th>
+                                                <th class="font-weight-bold text-dark">Estado</th>
+                                                <th class="font-weight-bold text-dark">-</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div>
+                                                            <h6 class="mb-0 text-sm">{{racer.idRacer}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-sm font-weight-bold text-dark mb-0">{{racer.name}}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-sm font-weight-bold text-dark mb-0">{{racer.dni}}</p>
+                                                </td>
+                                                <td >
+                                                    <span class="text-sm font-weight-bold text-dark mb-0">{{racer.birth|date:"d/m/Y"}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-sm font-weight-bold text-dark mb-0">{{racer.cel}}</span>
+                                                </td>
+                                                <td >
+                                                    {% if racer.active == True %}
+                                                    <span class="badge badge-sm bg-gradient-success">Activa</span>
+                                                    {% else %}
+                                                    <span class="badge badge-sm bg-gradient-danger">Inactiva</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'editRacer' %}?idRacer={{racer.idRacer}}" class="btn btn-link text-dark px-3 mb-0">Ver <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer"></i></a>
+                                                    
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                </div><br><br>
+            <a href="{% url 'IDRacers' %}" class="btn btn-primary">Volver atrás</a>
+        </div>
+{% else %}
+    <!-- If there is no match -->
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0"><strong>Ingrese el DNI del corredor</strong></p>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <form class="card-body" method="post"> {% csrf_token %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                            <label for="example-number-input" class="form-control-label">DNI</label>
+                            <input class="form-control" type="text" value="" id="dni" name="dni" minlength="5" maxlength="15" pattern="[0-9]+" required>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-4">
+                            <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Buscar">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <h4 class="text-danger">{{error}} </h4>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

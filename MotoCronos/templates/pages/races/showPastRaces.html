@@ -4,7 +4,6 @@
 {% block content %}
 
 <div class="main-content position-relative max-height-vh-100 h-100">
-    
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-md-12">
@@ -40,9 +39,7 @@
                         <p class="text-xs text-dark mb-0 font-weight-bold">{{r.lapNumber}}</p>
                       </td>
                       <td class="align-middle text-center">
-            
                         <span class="text-dark font-weight-bold">{{r.date|date:"d/m/Y"}}</span>
-                        <!-- class="text-secondary text-xs font-weight-bold" -->
                       </td>
                       <td class="align-middle">
                         {% if r.active == True %}
@@ -50,9 +47,6 @@
                         {% else %}
                         <span class="badge badge-sm bg-gradient-danger">Inactiva</span>
                         {% endif %}
-                        <!-- <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Ver
-                        </a> -->
                       </td>
                       <td><a href="?idRace={{r.idRace}}">Ver</a></td>
                     </tr>
@@ -131,10 +125,7 @@
         </div>
     </div>
   </div> 
-{% else %}
-<div class="main-content position-relative max-height-vh-100 h-100">
-    <h4 class="text-center text-danger">No se encontraron resultados</h4>
-</div>
+
 {% endif %}
 
 {% endblock %}

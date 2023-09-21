@@ -14,9 +14,11 @@ urlpatterns = [
     path('racer/ALRacers/', views.ALRacer, name="ALRacers"),
     path('racer/NLRacers/', views.NLRacer, name="NLRacers"),
     path('racer/IDRacers/', views.IDRacer, name="IDRacers"),
+    path('racer/editRacer/', views.editRacer, name="editRacer"),
     
     #START RACE
     path('startRace/', views.startRace, name="startRace"),
 
     path('login/', views.login, name="login"),
+    # path('prueba/', views.prueba, name="prueba"),
 ]
