@@ -3,4 +3,149 @@
 {% load static %}
 
 {% block content %}
+
+{% if idRace %}
+    {% if race.active %}
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        
+        <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-4">
+            <div class="card">
+                <div class="card-header pb-0">
+                <div class="d-flex align-items-center">
+                    <p class="text-dark font-weight-bold"><strong>Detalles de Carrera</strong></p>
+                </div>
+                </div>
+                <form class="card-body" method="post" id="form"> {% csrf_token %}         
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label class="form-control-label">
+                            <h5 class="text-dark font-weight-bold">Nombre de Carrera</h5>
+                        </label>
+                        <input class="form-control" type="text" value="{{race.name}}" min="5" maxlength="32" id="name" name="name" pattern="[A-Za-z0-9 ]*" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label class="form-control-label">Seleccione cantidad de vueltas</label><br>
+                    <select class="" id="laps" name="laps" required><br><br>
+                        {% if race.lapNumber == 1 %}
+                            <option value="1" selected>1 Vuelta</option>
+                            <option value="2">2 Vueltas</option>
+                            <option value="3">3 Vueltas</option>
+                            <option value="4">4 Vueltas</option>
+                            <option value="5">5 Vueltas</option>
+                        {% elif race.lapNumber == 2 %}
+                            <option value="1">1 Vuelta</option>
+                            <option value="2" selected>2 Vueltas</option>
+                            <option value="3">3 Vueltas</option>
+                            <option value="4">4 Vueltas</option>
+                            <option value="5">5 Vueltas</option>
+                        {% elif race.lapNumber == 3 %}
+                            <option value="1">1 Vuelta</option>
+                            <option value="2">2 Vueltas</option>
+                            <option value="3" selected>3 Vueltas</option>
+                            <option value="4">4 Vueltas</option>
+                            <option value="5">5 Vueltas</option>
+                        {% elif race.lapNumber == 4 %}
+                            <option value="1" >1 Vuelta</option>
+                            <option value="2">2 Vueltas</option>
+                            <option value="3">3 Vueltas</option>
+                            <option value="4" selected>4 Vueltas</option>
+                            <option value="5">5 Vueltas</option>
+                        {% else %}
+                            <option value="1">1 Vuelta</option>
+                            <option value="2">2 Vueltas</option>
+                            <option value="3">3 Vueltas</option>
+                            <option value="4">4 Vueltas</option>
+                            <option value="5" selected>5 Vueltas</option>
+                        {% endif %}
+                    </select>
+                    </div>
+                    
+                </div>
+                <div>
+                    <select name="active" id="active">
+                        {% if race.active %}
+                            <option selected value="True">Si</option>
+                            <option value="False">No</option>
+                        {% else %}
+                            <option value="True">Si</option>
+                            <option selected value="False">No</option>
+                        {% endif %}
+                    </select>
+                </div>
+    
+                    <hr class="horizontal dark"><br><br>
+                    <div class="col-md-12">
+                    <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Guardar carrera">
+                    <a class="btn btn-danger" href="{{ request.META.HTTP_REFERER }}">Volver atrás</a>
+
+                    </div>
+                </div>
+                </div>
+                
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        const active = document.getElementById('active');
+        const form = document.getElementById('form');
+        
+        active.addEventListener('click', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Editar Carrera',
+                text: 'Si desactiva una carrera no la podrá activar nuevamente',
+                icon: 'information',
+                showCancelButton: false,
+                confirmButtonText: 'Ok',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, envía el formulario para guardar el producto
+                    // form.submit();
+                }
+            });
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Editar Carrera',
+                text: '¿Estás seguro de guardar los datos?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, envía el formulario para guardar el producto
+                    form.submit();
+                }
+            });
+        });
+
+        });    
+    </script>
+    {% else %}<!--NOT ACTIVE-->
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        <h4 class="text-center text-danger">La carrera no existe o se encuentra inactiva</h4>
+    </div>
+
+    {% endif %}
+{% else %}<!--RACE DOESN'T EXIST-->
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        <h4 class="text-center text-danger">No se ingresó ninguna carrera</h4>
+    </div>
+{% endif %}
 {% endblock %}

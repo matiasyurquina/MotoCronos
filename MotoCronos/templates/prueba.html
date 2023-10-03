@@ -1,34 +1,145 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'assets/css/sweetAlert.css' %}">
-<script src="{% static 'assets/css/sweetAlert' %} "></script>
 
-<form id="form" method="post">
-    {% csrf_token %}
-        <input type="text" id="asdasd">
-      <input type="submit" name="btn" id="btnSave">
+<form action="" name="miFormulario" id="miFormulario" method="POST">{% csrf_token %}
+    <!-- NAME
+    <input type="text" name="name" id="name"><br><br>
+    MAIL
+    <input type="email" name="email" id="email"><br><br>
+    BIO
+    <input type="text" name="bio" id="bio"><br><br> -->
+    <input type="hidden" name="valores" id="valores">
+    <input type="submit" name="submitBtn" id="submitBtn" onclick="f2();">
 </form>
+
+<script>
+    function f2(){
+        var vector = JSON.parse('{{ v|safe }}');
+        // Ahora puedes trabajar con el QueryDict en JavaScript
+        for (var i in vector) {
+            if (vector.hasOwnProperty(i)) {
+                var value = vector[i];
+                console.log("clave: " + i + ", valor: " + value);
+            }
+        }
+    }   
+</script>
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
-    const btnSave = document.getElementById('btnSave');
-    const form = document.getElementById('form');
+function f(){
+    var tiempos = ["00:00:00", "00:22:02", "00:45:21", "00:56:23", "01:18:12"];
+    var h = document.getElementById("valores");
+    var miArrayJSON = JSON.parse(tiempos);
+    h.value = miArrayJSON;
+}
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¿Quieres guardar este producto?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sí',
-            cancelButtonText: 'No'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Si el usuario confirma, envía el formulario para guardar el producto
-                form.submit();
-            }
+document.addEventListener('DOMContentLoaded', function () {
+    const formulario = document.getElementById('miFormulario');
+    const botonEnviar = document.getElementById('submitBtn');
+
+    formulario.addEventListener('submit', function (e) {
+        var valores = ["00:00:00", "00:22:02", "00:45:21", "00:56:23", "01:18:12"];
+        var h = document.getElementById("valores");
+        var miArrayJSON = JSON.stringify(valores);
+        h.value = miArrayJSON;
+        e.preventDefault(); // Evitar el envío predeterminado del formulario
+
+        // Obtener los datos del formulario
+        const formData = new FormData(formulario);
+
+        // Realizar una solicitud POST usando fetch
+        fetch(formulario.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken') // Asegúrate de incluir el token CSRF
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hacer algo con la respuesta del servidor (data)
+            console.log(data);
+
+            // Puedes redirigir o actualizar la página si es necesario
+            // window.location.href = '/nueva/ubicacion/';
+        })
+        .catch(error => {
+            // console.error('Error:', error);
         });
     });
-    });    
+});
 </script>
+
+<script>
+    // Accede a la lista desde JavaScript
+    // function f1(){
+    //     var miArrayEnJavaScript = {{ mi_array|safe }};
+        
+    //     // Ahora puedes trabajar con el array en JavaScript
+    //     for (var i = 0; i < miArrayEnJavaScript.length; i++) {
+    //         console.log(miArrayEnJavaScript[i]);
+    //     }
+    // }
+    
+</script>
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cronómetro</title>
+</head>
+<body>
+    
+    <div id="cronometro">00:00:00</div>
+    <button id="iniciar">Iniciar</button>
+    <button id="lap">Detener</button>
+
+    <script>
+        var cronometroElement = document.getElementById('cronometro');
+        var iniciarButton = document.getElementById('iniciar');
+        var lapButton = document.getElementById('lap');
+        var tiempos = [];
+        
+        var tiempoInicio = 0;
+        var intervalId;
+
+        function actualizarCronometro() {
+            var tiempoActual = new Date().getTime();
+            var tiempoTranscurrido = tiempoActual - tiempoInicio;
+            var segundos = Math.floor(tiempoTranscurrido / 1000);
+            var minutos = Math.floor(segundos / 60);
+            var horas = Math.floor(minutos / 60);
+
+            segundos %= 60;
+            minutos %= 60;
+            horas %= 24;
+
+            if(segundos<10){
+                segundos="0"+segundos
+            }
+            if(minutos<10){
+                minutos="0"+minutos
+            }
+            if(horas<10){
+                horas="0"+horas
+            }
+            
+            cronometroElement.innerHTML = horas + ":" + minutos + ":" + segundos;
+        }
+
+        iniciarButton.addEventListener('click', function() {
+            tiempoInicio = new Date().getTime();
+            intervalId = setInterval(actualizarCronometro, 1000);
+        });
+
+        lapButton.addEventListener('click', function() {
+            // clearInterval(intervalId);
+            var tiempoRegistrado = cronometroElement.innerHTML;
+            tiempos.push(tiempoRegistrado);
+            alert(tiempos);
+            // Aquí puedes enviar el tiempoRegistrado al servidor Django para guardar en la base de datos
+        });
+        
+    </script>
+</body>
+</html> -->

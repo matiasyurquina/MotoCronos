@@ -35,27 +35,22 @@
                       </div>
                     </td>
                     <td>
-                      <p class="text-sm font-weight-bold text-dark mb-0">{{r.name}}</p>
+                      <p class="text-dark font-weight-bold">{{r.name}}</p>
                     </td>
-                    <td class="align-middle text-center text-sm">
-                      <p class="text-xs text-dark mb-0 font-weight-bold">{{r.lapNumber}}</p>
+                    <td>
+                      <p class="text-dark font-weight-bold">{{r.lapNumber}}</p>
                     </td>
-                    <td class="align-middle text-center">
-          
-                      <span class="text-dark font-weight-bold">{{r.date|date:"d/m/Y"}}</span>
-                      <!-- class="text-secondary text-xs font-weight-bold" -->
+                    <td>
+                      <p class="text-dark font-weight-bold">{{r.date|date:"d/m/Y"}}</p>
                     </td>
-                    <td class="align-middle">
+                    <td>
                       {% if r.active == True %}
                       <span class="badge badge-sm bg-gradient-success">Activa</span>
                       {% else %}
                       <span class="badge badge-sm bg-gradient-danger">Inactiva</span>
                       {% endif %}
-                      <!-- <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Ver
-                      </a> -->
                     </td>
-                    <td><a href="#">Ver</a></td>
+                    <td><a href="{% url 'editRace' %}?idRace={{r.idRace}}">Ver</a></td>
                   </tr>
                   
                 </tbody>

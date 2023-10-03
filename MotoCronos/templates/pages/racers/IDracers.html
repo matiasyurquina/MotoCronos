@@ -78,7 +78,7 @@
                     <div class="card-header pb-0">
                         <div class="d-flex align-items-center">
                         <div class="d-flex align-items-center">
-                            <p class="mb-0"><strong>Ingrese el DNI del corredor</strong></p>
+                            <h5 class="font-weight-bold">Ingrese el DNI del corredor</h5>
                         </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                     <form class="card-body" method="post"> {% csrf_token %}
                         <div class="col-md-12">
                             <div class="form-group">
-                            <label for="example-number-input" class="form-control-label">DNI</label>
+                            <label for="example-number-input" class="form-control-label"> <h6 class="font-weight-bold">DNI</h6></label>
                             <input class="form-control" type="text" value="" id="dni" name="dni" minlength="5" maxlength="15" pattern="[0-9]+" required>
                             </div>
                         </div>

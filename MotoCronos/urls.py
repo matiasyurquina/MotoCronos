@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.urls import path
+from django.urls import path
+
 urlpatterns = [
     path('', views.home, name="home"),
     
@@ -19,6 +22,11 @@ urlpatterns = [
     #START RACE
     path('startRace/', views.startRace, name="startRace"),
 
-    path('login/', views.login, name="login"),
+    path('login/', views.login_view, name="login"),
+    path('logout/', views.logout, name="logout"),
+    # path('guardar_vuelta/<int:vuelta>/', views.guardar_vuelta, name='guardar_vuelta'),
+
     # path('prueba/', views.prueba, name="prueba"),
+    path('mi_vista/', views.mi_vista, name='mi_vista'),
+
 ]

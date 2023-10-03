@@ -42,16 +42,16 @@
                   <p class="mb-0">Ingrese su usuario y contraseña</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" method="POST"> {% csrf_token %}
                     <div class="mb-3">
-                      <input type="text" class="form-control form-control-lg" placeholder="Usuario">
+                      <input type="text" class="form-control form-control-lg" placeholder="Usuario" name="username">
                     </div>
                     <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="Password">
+                      <input type="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="Password" name="password">
                     </div>
                     
                     <div class="text-center">
-                      <button type="button" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Ingresar</button>
+                      <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Ingresar</button>
                     </div>
                   </form>
                 </div>
@@ -91,3 +91,6 @@
 </body>
 
 </html>
+{% if request.user.is_authenticated %}
+  <meta http-equiv="refresh" content="0;url={% url 'home' %}">
+{% endif %}

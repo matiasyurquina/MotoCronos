@@ -5,43 +5,102 @@
 {% block content %}
 
 {% if racersList %}
-<div class="main-content position-relative max-height-vh-100 h-100">
+<!-- <div class="main-content position-relative max-height-vh-100 h-100">
   <div class="container-fluid py-4">
     <div class="row">
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <!-- FORM -->
+
           <form class="card-body" method="post" id="form"> {% csrf_token %}
             <p>Carrera: {{race.name}}</p>
             <p class="text-uppercase text-sm">Corredores Seleccionados</p>
             <div class="col-md-24">
               <div class="form-group table-responsive">
                   <label for="racers"><h6>La carrera se creará con los siguientes corredores</h6></label><br>
-                  <select name="racersList" id="racersList" multiple size="20" class="col-md-12" >
+                  
                     {% for r in racers %}
                       <option value="{{r.idRacer}}">
                         <td> {{r.idRacer}} | {{r.lname}} | {{r.name}} | {{r.dni}} | Activo </td>
                       </option>
                     {% endfor %}
-                  </select>
+                  
                 </div>
             </div> <br>
             <hr class="horizontal dark">
             <div class="col-md-4">
                   <div class="form-group">
+                    <input type="hidden" name="start" value="True">
                     <input type="submit" class="btn btn-primary" value="Iniciar Carrera" name="btnSave">
                   </div>
               </div>
-            </form>
-            <!-- END FORM -->
+          </form>
+
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
+
+<div class="main-content position-relative max-height-vh-100 h-100">
+  <form method="post">{% csrf_token %}
+  <div class="container-fluid py-4">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header">
+                    <h6 class="text-uppercase text-sm">La carrera se va a crear con los siguientes corredores:</h6><br>
+                      <div class="d-flex align-items-center table-responsive p-0">
+                          <table class="table mb-0">
+                              <thead>
+                                  <tr>            
+                                      <th class="font-weight-bold text-dark">ID Corredor</th>
+                                      <th class="font-weight-bold text-dark">Nombre</th>
+                                      <th class="font-weight-bold text-dark">DNI</th>
+                                      <th class="font-weight-bold text-dark">Estado</th>
+                                  </tr>
+                              </thead>
+
+                              <tbody>
+                                {% for r in racers %}
+                                  <tr>
+                                      <td>
+                                          <div class="d-flex px-2 py-1">
+                                              <div>
+                                                  <h6 class="mb-0 text-sm">{{r.idRacer}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <p class="text-sm font-weight-bold text-dark mb-0">{{r.lname}}, {{r.name}}</p>
+                                      </td>
+                                      <td>
+                                          <p class="text-sm font-weight-bold text-dark mb-0">{{r.dni}}</p>
+                                      </td>
+                                      <td >
+                                          {% if r.active == True %}
+                                          <span class="badge badge-sm bg-gradient-success">Activa</span>
+                                          {% else %}
+                                          <span class="badge badge-sm bg-gradient-danger">Inactiva</span>
+                                          {% endif %}
+                                      </td>
+                                  </tr>
+                                {% endfor %}
+                                  
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>     
+              </div>
+          </div>
+      </div><br><br>
+  <input type="hidden" name="start" value="True">
+  <a href="?idRace={{idRace}}" class="btn btn-primary">Volver atrás</a>
+  <input type="submit" class="btn btn-primary" value="Iniciar Carrera" name="btnStart">
+  </form>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
 const btnSave = document.getElementById('btnSave');
@@ -76,10 +135,11 @@ form.addEventListener('submit', function(event) {
             <form class="card-body" method="post" id="form"> {% csrf_token %}
               <p>Carrera: {{race.name}}</p>
               <p class="text-uppercase text-sm">Seleccionar corredores</p>
+              <p class="text-uppercase text-sm">Podés usar CTRL+Click para seleccinar uno a uno o SHIFT+Click para seleccionar items contiguos</p>
               <div class="col-md-24">
                 <div class="form-group table-responsive">
                     <label for="racers"><h6>Elegí los corredores (Si no lo ves aquí HABILITA AL CORREDOR):</h6></label><br>
-                    <select name="racersList" id="racersList" multiple size="20" class="col-md-12" >
+                    <select name="racersList" id="racersList" multiple size="20" class="col-md-12" required>
                       {% for r in racers %}
                         <option value="{{r.idRacer}}">
                           <td> {{r.idRacer}} | {{r.lname}} | {{r.name}} | {{r.dni}} | Activo </td>
@@ -89,12 +149,13 @@ form.addEventListener('submit', function(event) {
                   </div>
               </div> <br>
               <hr class="horizontal dark">
-              <div class="col-md-4">
+              <div class="col-md-12">
                     <div class="form-group">
+                      <a class="btn btn-primary" name="btnBack" href="{% url 'startRace' %}">Volver</a>
                       <input type="submit" class="btn btn-primary" value="Siguiente" name="btnSave">
                     </div>
-                </div>
-              </form>
+              </div>
+            </form>
               <!-- END FORM -->
             </div>
           </div>

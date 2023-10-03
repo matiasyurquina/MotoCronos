@@ -1,0 +1,119 @@
+<title>Inicio de Carrera</title>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% if start %}
+<div class="main-content position-relative max-height-vh-100 h-100">
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+                <h4></h4>
+                {% for r in racersList %}
+                    <button value="{{r.idRacer}}" class="btn btn-primary">Marcar LAP</button>
+                {% endfor %}
+
+                <h1>Cronómetro</h1>
+                <form action="" method="post"> {% csrf_token %}
+                    <p id="cronometro">00:00:00</p>
+                    <!-- <input type="submit" value="LAP"> -->
+                    <!-- <a href="?{{r.idRace}}">LAP</a> -->
+                    <input type="submit" name="ok" id="ok" onclick="f1();">
+                </form>
+                <!-- <button id="iniciarDetener">Iniciar/Detener</button>
+                <button id="capturarVuelta">Capturar Vuelta</button> -->
+                <!-- <ul id="vueltas"></ul> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    // function f1(){   
+    var qry = JSON.parse('{{ v|safe}}');
+    console.log(qry);
+    // for (var key in qry) {
+    //     if (qry.hasOwnProperty(key)) {
+    //         var value = qry[key];
+    //         console.log("Key: " + key + ", Value: " + value);
+    //     }
+    // }
+    // }
+    
+</script>
+
+<script>
+//alert();
+// let running = false;
+// let startTime;
+// let elapsedTime = 0;
+// let interval;
+// const vueltas = [];
+
+// function startStop() {
+//     if (running) {
+//         clearInterval(interval);
+//         running = false;
+//     } else {
+//         startTime = Date.now() - elapsedTime;
+//         interval = setInterval(updateTime, 10);
+//         running = true;
+//     }
+// }
+
+// function updateTime() {
+//     const now = Date.now();
+//     elapsedTime = now - startTime;
+//     displayTime(elapsedTime);
+// }
+
+// function displayTime(time) {
+//     const minutes = Math.floor((time / 1000 / 60) % 60);
+//     const seconds = Math.floor((time / 1000) % 60);
+//     const milliseconds = Math.floor((time % 1000) / 10);
+//     const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(2, '0')}`;
+//     document.getElementById('cronometro').textContent = formattedTime;
+// }
+
+// function capturarVuelta() {
+//     if (running) {
+//         vueltas.push(elapsedTime);
+//         const vueltaList = document.getElementById('vueltas');
+//         const li = document.createElement('li');
+//         li.textContent = formatTime(elapsedTime);
+//         vueltaList.appendChild(li);
+//     }
+// }
+
+// function formatTime(time) {
+//     const minutes = Math.floor((time / 1000 / 60) % 60);
+//     const seconds = Math.floor((time / 1000) % 60);
+//     const milliseconds = Math.floor((time % 1000) / 10);
+//     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}`;
+// }
+
+// document.getElementById('iniciarDetener').addEventListener('click', startStop);
+// document.getElementById('capturarVuelta').addEventListener('click', capturarVuelta);
+
+
+// // Selecciona todas las etiquetas <p> en la página
+// var parrafos = document.querySelectorAll('p');
+
+// // Inicializa un array para almacenar los valores de los párrafos
+// var valoresDeParrafos = [];
+
+// // Itera sobre las etiquetas <p> y agrega sus valores al array
+// parrafos.forEach(function(parrafo) {
+// valoresDeParrafos.push(parrafo.textContent);
+// });
+
+// Muestra los valores en la consola (puedes hacer lo que desees con ellos)
+// alert(valoresDeParrafos);
+
+</script>
+{% endif %}
+{% endblock %}

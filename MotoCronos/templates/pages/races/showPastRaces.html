@@ -13,7 +13,6 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-            
                         <th class="font-weight-bold text-dark">ID Carrera</th>
                         <th class="font-weight-bold text-dark">Nombre Carrera</th>
                         <th class="font-weight-bold text-dark">Vueltas</th>
@@ -28,27 +27,27 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{c.idRace}}</h6>
+                            <h6 class="text-dark font-weight-bold">{{r.idRace}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-sm font-weight-bold text-dark mb-0">{{r.name}}</p>
+                        <p class="text-dark font-weight-bold">{{r.name}}</p>
                       </td>
-                      <td class="align-middle text-center text-sm">
-                        <p class="text-xs text-dark mb-0 font-weight-bold">{{r.lapNumber}}</p>
+                      <td>
+                        <p class="text-dark font-weight-bold">{{r.lapNumber}}</p>
                       </td>
-                      <td class="align-middle text-center">
+                      <td>
                         <span class="text-dark font-weight-bold">{{r.date|date:"d/m/Y"}}</span>
                       </td>
-                      <td class="align-middle">
+                      <td>
                         {% if r.active == True %}
                         <span class="badge badge-sm bg-gradient-success">Activa</span>
                         {% else %}
                         <span class="badge badge-sm bg-gradient-danger">Inactiva</span>
                         {% endif %}
                       </td>
-                      <td><a href="?idRace={{r.idRace}}">Ver</a></td>
+                      <td><a href="?idRace={{r.idRace}}" class="text-dark font-weight-bold">Ver</a></td>
                     </tr>
                     
                   </tbody>
@@ -75,7 +74,6 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-            
                         <th class="font-weight-bold text-dark">ID Resultado</th>
                         <th class="font-weight-bold text-dark">ID Carrera</th>
                         <th class="font-weight-bold text-dark">ID Corredor</th>
@@ -84,33 +82,30 @@
                         <th class="font-weight-bold text-dark">-</th>
                     </tr>
                   </thead>
-                  
                         {% for r in results %}
                         <tbody>
-                            <tr>
+                          <tr>
                             <td>
-                                <div class="d-flex px-2 py-1">
-                                <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm">{{r.idStartRace}}</h6>
-                                </div>
+                                <div>
+                                    <h6 class="text-dark font-weight-bold">{{r.idStartRace}}</h6>
                                 </div>
                             </td>
                             <td>
-                                <p class="text-sm font-weight-bold text-dark mb-0">{{r.idRace.idRace}}</p>
+                                <p class="text-dark font-weight-bold">{{r.idRace.idRace}}</p>
                             </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-xs text-dark mb-0 font-weight-bold">{{r.idRacer.idRacer}}</p>
+                            <td>
+                                <p class="text-dark font-weight-bold">{{r.idRacer.idRacer}}</p>
                             </td>
-                            <td class="align-middle text-center">
-                    
-                                <span class="text-dark font-weight-bold">{{r.lap_num}}</span>
+                            <td>
+                                <p class="text-dark font-weight-bold">{{r.lap_num}}</p>
                             </td>
-                            <td class="align-middle">
-                                {{r.lap}}
+                            <td>
+                              <p class="text-dark font-weight-bold">{{r.lap}}</p>
                             </td>
-                            <td><a href="?idRace={{r.idRace}}">Ver</a></td>
-                            </tr>
-                            
+                            <td>
+                              <a href="?idRace={{idRace}}">Ver</a>
+                            </td>
+                          </tr>
                         </tbody>
                         {% endfor %}
     {% else %}
@@ -124,8 +119,7 @@
           </div>
         </div>
     </div>
-  </div> 
-
+  </div>
 {% endif %}
 
 {% endblock %}
